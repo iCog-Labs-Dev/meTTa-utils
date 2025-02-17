@@ -385,3 +385,21 @@
               (($h $t) (decons $a))
               ($r (drop (- $n 1) $t)))
             $r)))))
+
+;;The below are list functions that maximizes utilities
+(= (cadr-atom $list)
+    (let $tail (cdr-atom $list) (car-atom $tail))
+)
+
+(= (caar-atom $list)
+    (let $head (car-atom $list) (car-atom $head))
+)
+
+(= (cdar-atom $list)
+    (let $head (car-atom $list) (cdr-atom $head))
+)
+
+(= (cddr-atom $list)
+    (let $tail (cdr-atom $list) (cdr-atom $tail))
+)
+
