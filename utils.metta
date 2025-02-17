@@ -9,7 +9,20 @@
 
 ;Function to cocatinate two tuples (A B) (C D) ==> (A B C D)
 ;(: cocatTuple (-> Expression Expression Expression))
- (= (concatTuple $x $y) (collapse (union (superpose $x) (superpose $y))))
+ (= (concatTuple' $x $y) (collapse (union (superpose $x) (superpose $y))))
+ (= (concatTuple $x $y)
+    (if (== $x ())
+        $y
+        (let* ( 
+            (($head $tail) (decons $x))
+            ($tail' (concatTuple $tail $y))
+
+        )
+            (cons-atom $head $tail')
+
+        )
+    )
+ )
 
 (: ++ (-> Expression Expression Expression))
 (= (++ $x $y)
@@ -402,4 +415,5 @@
 (= (cddr-atom $list)
     (let $tail (cdr-atom $list) (cdr-atom $tail))
 )
+
 
