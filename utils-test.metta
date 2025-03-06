@@ -163,3 +163,7 @@
 !(assertEqual (heapifyItems (12 15 7 3 10 8 5) 1) (3 10 7 15 12 8 5))
 !(assertEqual (heapifyItems (20 13 4 11 6 9 1) 0) (4 13 1 11 6 9 20))
 
+;; Test heapify function
+!(assertEqual (heapify (14 3 11 7 9 2 5)) (2 3 5 7 9 11 14))
+!(assertEqual (heapify (25 17 8 19 4 10 6)) (4 17 6 19 25 10 8))
+!(assertEqual (heapify (30 18 9 21 12 5 7)) (5 12 7 21 18 9 30))
