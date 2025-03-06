@@ -439,7 +439,7 @@
 
 
 
-;; Function: getSmallestChild
+;; Function: getSmallestChildIndex
 ;; Description: Given a list and two indices, returns the index of the smaller value.
 ;;              If neither index exists in the list, returns an empty expression.
 ;; Parameters:
@@ -447,7 +447,7 @@
 ;;   - $left: The first index.
 ;;   - $right: The second index.
 ;; Returns: Numeber if indexes exist, () if neither index exists
-(= (getSmallestChild $list $left $right)
+(= (getSmallestChildIndex $list $left $right)
     (let*
         (
             ($listLength (size-atom $list))
@@ -483,7 +483,7 @@
     )
 )
 
-;! (getSmallestChild (2 19 7 25 6 33 2 15 27 3 41) 9 10)
+;! (getSmallestChildIndex (2 19 7 25 6 33 2 15 27 3 41) 9 10)
 
 
 
@@ -501,7 +501,7 @@
             ($left (+ 1 (* 2 $index)))
             ($right (+ 2 (* 2 $index)))
             ($indexItem (index-atom $list $index))
-            ($smallestChildIndex (getSmallestChild $list $left $right))
+            ($smallestChildIndex (getSmallestChildIndex $list $left $right))
             ($smallestChildItem
                 (if (== (get-type $smallestChildIndex) Number)
                     (index-atom $list $smallestChildIndex)
