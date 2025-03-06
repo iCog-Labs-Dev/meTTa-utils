@@ -437,8 +437,6 @@
     )
 )
 
-; ! (swap (0 1 2 3 4 5 6) 2 5) ; [(0 1 5 3 4 2 6)]
-
 
 
 ;; Function: getSmallestChild

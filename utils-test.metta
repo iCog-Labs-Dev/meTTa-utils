@@ -142,3 +142,8 @@
 ;; Test foldr function
 !(assertEqual (foldr + 0 (1 2 3)) 6)
 !(assertEqual (foldr + 0 (1 2 3)) 6)
+
+
+;; Test swap function
+!(assertEqual (swap (0 1 2 3 4 5 6) 2 5) (0 1 5 3 4 2 6))
+!(assertEqual (swap (0 1) 0 1) (1 0))
