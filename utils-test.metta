@@ -167,3 +167,7 @@
 !(assertEqual (heapify (14 3 11 7 9 2 5)) (2 3 5 7 9 11 14))
 !(assertEqual (heapify (25 17 8 19 4 10 6)) (4 17 6 19 25 10 8))
 !(assertEqual (heapify (30 18 9 21 12 5 7)) (5 12 7 21 18 9 30))
+
+;; Test parent function
+!(assertEqual (parent 7) 3)
+!(assertEqual (parent 8) 3)

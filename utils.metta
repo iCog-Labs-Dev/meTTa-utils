@@ -575,8 +575,6 @@
 ;;   - The parent index of the given node.
 (= (parent $index) (floor-math (/ (- $index 1) 2)))
 
-; ! (parent 11) ; 5
-
 
 
 ;; Function: isNodeLargerThanParent
