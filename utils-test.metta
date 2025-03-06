@@ -182,3 +182,7 @@
 !(assertEqual (swapWithParent ((5 3 8 1 2) 1)) ((3 5 8 1 2) 0))
 !(assertEqual (swapWithParent ((5 3 8 1 2) 2)) ((8 3 5 1 2) 0))
 !(assertEqual (swapWithParent ((5 3 8 1 2) 4)) ((5 2 8 1 3) 1))
+
+; Test heapPush function
+!(assertEqual (heapPush (2 3 5 7 9 11 14) 1) (1 2 5 3 9 11 14 7))
+!(assertEqual (heapPush (2 3 5 7 9 11 14) 5) (2 3 5 5 9 11 14 7))
