@@ -177,3 +177,8 @@
 !(assertEqual (isNodeLargerThanParent ((5 3 8 1 2) 1)) False)
 !(assertEqual (isNodeLargerThanParent ((5 3 8 1 2) 2)) True)
 !(assertEqual (isNodeLargerThanParent ((5 3 8 1 2) 4)) False)
+
+;; Test swapWithParent function
+!(assertEqual (swapWithParent ((5 3 8 1 2) 1)) ((3 5 8 1 2) 0))
+!(assertEqual (swapWithParent ((5 3 8 1 2) 2)) ((8 3 5 1 2) 0))
+!(assertEqual (swapWithParent ((5 3 8 1 2) 4)) ((5 2 8 1 3) 1))
