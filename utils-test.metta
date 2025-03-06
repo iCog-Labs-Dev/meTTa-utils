@@ -171,3 +171,9 @@
 ;; Test parent function
 !(assertEqual (parent 7) 3)
 !(assertEqual (parent 8) 3)
+
+;; Test isNodeLargerThanParent function
+!(assertEqual (isNodeLargerThanParent ((5 3 8 1 2) 0)) True)
+!(assertEqual (isNodeLargerThanParent ((5 3 8 1 2) 1)) False)
+!(assertEqual (isNodeLargerThanParent ((5 3 8 1 2) 2)) True)
+!(assertEqual (isNodeLargerThanParent ((5 3 8 1 2) 4)) False)

@@ -600,9 +600,6 @@
     )
 )
 
-; ! (isNodeLargerThanParent ((2 3 7 15 6 33 12 25 27 19 41 1) 11))
-
-
 
 
 ;; Function: swapWithParent
@@ -622,8 +619,6 @@
         ($swapped $parent)
     )
 )
-; ! (swapWithParent ((2 3 7 15 6 33 12 25 27 19 41 1) 11))
-
 
 
 
