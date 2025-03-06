@@ -483,9 +483,6 @@
     )
 )
 
-;! (getSmallestChildIndex (2 19 7 25 6 33 2 15 27 3 41) 9 10)
-
-
 
 ;; Function: minHeap
 ;; Description: Ensures that the node at the given index satisfies the min-heap property.

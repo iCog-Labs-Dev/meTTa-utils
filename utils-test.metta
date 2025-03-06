@@ -143,7 +143,13 @@
 !(assertEqual (foldr + 0 (1 2 3)) 6)
 !(assertEqual (foldr + 0 (1 2 3)) 6)
 
-
 ;; Test swap function
 !(assertEqual (swap (0 1 2 3 4 5 6) 2 5) (0 1 5 3 4 2 6))
 !(assertEqual (swap (0 1) 0 1) (1 0))
+
+;; Test getSmallestChildIndex function
+!(assertEqual (getSmallestChildIndex (5 10 12) 1 2) 1)
+!(assertEqual (getSmallestChildIndex (5 10 12) 2 3) 2)
+!(assertEqual (getSmallestChildIndex (5 10 12) 3 4) ())
+!(assertEqual (getSmallestChildIndex (2 19 7 25 6 33 2 15 27 3 41) 9 10) 9)
+
