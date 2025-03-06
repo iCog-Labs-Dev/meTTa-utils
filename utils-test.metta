@@ -153,3 +153,7 @@
 !(assertEqual (getSmallestChildIndex (5 10 12) 3 4) ())
 !(assertEqual (getSmallestChildIndex (2 19 7 25 6 33 2 15 27 3 41) 9 10) 9)
 
+;; Test minHeap function
+!(assertEqual (minHeap (5 3 8 1 2) 0) (3 1 8 5 2))
+!(assertEqual (minHeap (5 3 8 1 2) 1) (5 1 8 3 2))
+!(assertEqual (minHeap (5 3 8 1 2) 4) (5 3 8 1 2))
