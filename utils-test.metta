@@ -186,3 +186,7 @@
 ; Test heapPush function
 !(assertEqual (heapPush (2 3 5 7 9 11 14) 1) (1 2 5 3 9 11 14 7))
 !(assertEqual (heapPush (2 3 5 7 9 11 14) 5) (2 3 5 5 9 11 14 7))
+
+Test heapPop function
+!(assertEqual (heapPop (2 3 5 7 9 11 14)) (2 (3 7 5 14 9 11)))
+!(assertEqual (heapPop (3 10 7 15 12 8 5)) (3 (5 10 7 15 12 8)))
