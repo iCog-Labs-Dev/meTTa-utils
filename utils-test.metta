@@ -162,3 +162,4 @@
 !(assertEqual (heapifyItems (8 2 10 5 1 7 3) 2) (1 2 3 5 8 7 10))
 !(assertEqual (heapifyItems (12 15 7 3 10 8 5) 1) (3 10 7 15 12 8 5))
 !(assertEqual (heapifyItems (20 13 4 11 6 9 1) 0) (4 13 1 11 6 9 20))
+
