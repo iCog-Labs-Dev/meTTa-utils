@@ -142,3 +142,51 @@
 ;; Test foldr function
 !(assertEqual (foldr + 0 (1 2 3)) 6)
 !(assertEqual (foldr + 0 (1 2 3)) 6)
+
+;; Test swap function
+!(assertEqual (swap (0 1 2 3 4 5 6) 2 5) (0 1 5 3 4 2 6))
+!(assertEqual (swap (0 1) 0 1) (1 0))
+
+;; Test getSmallestChildIndex function
+!(assertEqual (getSmallestChildIndex (5 10 12) 1 2) 1)
+!(assertEqual (getSmallestChildIndex (5 10 12) 2 3) 2)
+!(assertEqual (getSmallestChildIndex (5 10 12) 3 4) ())
+!(assertEqual (getSmallestChildIndex (2 19 7 25 6 33 2 15 27 3 41) 9 10) 9)
+
+;; Test minHeap function
+!(assertEqual (minHeap (5 3 8 1 2) 0) (3 1 8 5 2))
+!(assertEqual (minHeap (5 3 8 1 2) 1) (5 1 8 3 2))
+!(assertEqual (minHeap (5 3 8 1 2) 4) (5 3 8 1 2))
+
+;; Test heapifyItems function
+!(assertEqual (heapifyItems (8 2 10 5 1 7 3) 2) (1 2 3 5 8 7 10))
+!(assertEqual (heapifyItems (12 15 7 3 10 8 5) 1) (3 10 7 15 12 8 5))
+!(assertEqual (heapifyItems (20 13 4 11 6 9 1) 0) (4 13 1 11 6 9 20))
+
+;; Test heapify function
+!(assertEqual (heapify (14 3 11 7 9 2 5)) (2 3 5 7 9 11 14))
+!(assertEqual (heapify (25 17 8 19 4 10 6)) (4 17 6 19 25 10 8))
+!(assertEqual (heapify (30 18 9 21 12 5 7)) (5 12 7 21 18 9 30))
+
+;; Test parent function
+!(assertEqual (parent 7) 3)
+!(assertEqual (parent 8) 3)
+
+;; Test isNodeLargerThanParent function
+!(assertEqual (isNodeLargerThanParent ((5 3 8 1 2) 0)) True)
+!(assertEqual (isNodeLargerThanParent ((5 3 8 1 2) 1)) False)
+!(assertEqual (isNodeLargerThanParent ((5 3 8 1 2) 2)) True)
+!(assertEqual (isNodeLargerThanParent ((5 3 8 1 2) 4)) False)
+
+;; Test swapWithParent function
+!(assertEqual (swapWithParent ((5 3 8 1 2) 1)) ((3 5 8 1 2) 0))
+!(assertEqual (swapWithParent ((5 3 8 1 2) 2)) ((8 3 5 1 2) 0))
+!(assertEqual (swapWithParent ((5 3 8 1 2) 4)) ((5 2 8 1 3) 1))
+
+; Test heapPush function
+!(assertEqual (heapPush (2 3 5 7 9 11 14) 1) (1 2 5 3 9 11 14 7))
+!(assertEqual (heapPush (2 3 5 7 9 11 14) 5) (2 3 5 5 9 11 14 7))
+
+Test heapPop function
+!(assertEqual (heapPop (2 3 5 7 9 11 14)) (2 (3 7 5 14 9 11)))
+!(assertEqual (heapPop (3 10 7 15 12 8 5)) (3 (5 10 7 15 12 8)))
