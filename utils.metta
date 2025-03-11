@@ -417,3 +417,253 @@
 )
 
 
+;; Function: swap
+;; Description: Swaps the elements at the given indices in a list.
+;; Parameters:
+;;   - $list: The list in which elements will be swapped.
+;;   - $first: The index of the first element.
+;;   - $second: The index of the second element.
+;; Returns:
+;;   - List: A new list with the elements at $first and $second indices swapped.
+(= (swap $list $first $second)
+    (let*
+        (
+            ($first-item (index-atom $list $first))
+            ($second-item (index-atom $list $second))
+            ($replace-first-with-second (replaceByIndex $list $first $second-item))
+            ($replace-second-with-first (replaceByIndex $replace-first-with-second $second $first-item))
+        )
+        $replace-second-with-first
+    )
+)
+
+
+
+;; Function: getSmallestChildIndex
+;; Description: Given a list and two indices, returns the index of the smaller value.
+;;              If neither index exists in the list, returns an empty expression.
+;; Parameters:
+;;   - $list: The list to check.
+;;   - $left: The first index.
+;;   - $right: The second index.
+;; Returns: Numeber if indexes exist, () if neither index exists
+(= (getSmallestChildIndex $list $left $right)
+    (let*
+        (
+            ($listLength (size-atom $list))
+            ($left-item
+                (if (>= $left $listLength)
+                    ()
+                    (index-atom $list $left)
+                )
+            )
+            ($right-item
+                (if (>= $right $listLength)
+                    ()
+                    (index-atom $list $right)
+                )
+            )
+            ($smaller-child
+                (if (== (get-type $left-item) Number)
+                    (if (== (get-type $right-item) Number)
+                        (if (> $left-item $right-item)
+                            $right
+                            $left
+                        )
+                        $left
+                    )
+                    (if (== (get-type $right-item) Number)
+                        $right
+                        ()
+                    )
+                )
+            )
+        )
+        $smaller-child
+    )
+)
+
+
+;; Function: minHeap
+;; Description: Ensures that the node at the given index satisfies the min-heap property.
+;;              If the node is greater than the smallest child node, it swaps them recursively
+;;              until the node is smaller than its children.
+;; Parameters:
+;;   - $list: The list representing the heap.
+;;   - $index: The index of the node to be adjusted.
+;; Returns: the modified list maintaining the min-heap structure from that index upwards.
+(= (minHeap $list $index)
+    (let*
+        (
+            ($left (+ 1 (* 2 $index)))
+            ($right (+ 2 (* 2 $index)))
+            ($indexItem (index-atom $list $index))
+            ($smallestChildIndex (getSmallestChildIndex $list $left $right))
+            ($smallestChildItem
+                (if (== (get-type $smallestChildIndex) Number)
+                    (index-atom $list $smallestChildIndex)
+                    ()
+                )
+            )
+            ($smaller
+                (if (== (get-type $smallestChildItem) Number)
+                    (if (> $indexItem $smallestChildItem)
+                        $smallestChildIndex
+                        $index
+                    )
+                    $index
+                )
+            )
+        )
+        (
+            if (== $smaller $index)
+                $list
+                (let*
+                    (
+                        ($newList (swap $list $index $smaller))
+                    )
+                    (minHeap $newList $smaller)
+                )
+        )
+    )
+)
+
+
+
+;; Function: heapifyItems
+;; Description: Converts a list into a min-heap by calling `minHeap` on each parent node,
+;;              starting from the last parent node and moving up to the root.
+;; Parameters:
+;;   - $list: The list to be transformed into a min-heap.
+;;   - $index: The index of the current node being heapified.
+;; Returns:
+;;   - The modified list where all elements satisfy the min-heap property.
+(= (heapifyItems $list $index)
+    (if (< $index 0)
+        $list
+        (let $newList (minHeap $list $index)
+            (heapifyItems $newList (- $index 1))
+        )
+    )
+)
+
+
+
+;; Function: heapify
+;; Description: Converts a list into a min-heap by calling `heapifyItems`,
+;;              starting from the last parent node.
+;; Parameters:
+;;   - $list: The list to be transformed into a min-heap.
+;; Returns:
+;;   - The modified list where all elements satisfy the min-heap property.
+(= (heapify $list)
+    (let*
+        (
+            ($listLength (size-atom $list))
+        )
+        (heapifyItems $list (- (floor-math (/ $listLength 2)) 1))
+    )
+)
+
+
+
+;; Function: parent
+;; Description: Computes the parent index of a given node index in a binary heap.
+;; Parameters:
+;;   - $index: The index of the node whose parent index is to be determined.
+;; Returns:
+;;   - The parent index of the given node.
+(= (parent $index) (floor-math (/ (- $index 1) 2)))
+
+
+
+;; Function: isNodeLargerThanParent
+;; Description: Checks if the value of a node at a given index is greater than or equal
+;;              to the value of its parent node in a binary heap.
+;; Parameters:
+;;   - $list: The list representing the heap.
+;;   - $index: The index of the node to compare with its parent.
+;; Returns:
+;;   - True if the node's value is greater than or equal to its parent's value,
+;;     or if the node is the root. Otherwise, returns False.
+(= (isNodeLargerThanParent ($list $index))
+    (if (<= $index 0)
+        True
+        (let*
+            (
+                ($parent (parent $index))
+                ($indexItem (index-atom $list $index))
+                ($parentItem (index-atom $list $parent))
+            )
+            (>= $indexItem $parentItem)
+        )
+    )
+)
+
+
+
+;; Function: swapWithParent
+;; Description: Swaps the node at a given index with its parent node and returns the swapped list
+;;              along with the index of the parent node.
+;; Parameters:
+;;   - $list: The list representing the heap.
+;;   - $index: The index of the node to be swapped with its parent.
+;; Returns:
+;;   - The swapped list and the parent index after the swap.
+(= (swapWithParent ($list $index))
+    (let*
+        (
+            ($parent (parent $index))
+            ($swapped (swap $list $parent $index))
+        )
+        ($swapped $parent)
+    )
+)
+
+
+
+;; Function: heapPush
+;; Description: Adds an item to the end of the heap and recursively swaps the new node 
+;;              with its parent until the node is larger than its parent, ensuring the heap property.
+;; Parameters:
+;;   - $list: The list representing the heap.
+;;   - $item: The item to be added to the heap.
+;; Returns:
+;;   - The modified list where the new item has been added and the heap property is maintained.
+(= (heapPush $list $item)
+    (let*
+        (
+            ($appendedList (appendAtom $item $list))
+            ($lastIndex (- (size-atom $appendedList) 1))
+            (($pushedList $index) (until isNodeLargerThanParent swapWithParent ($appendedList $lastIndex)))
+        )
+        $pushedList
+    )
+)
+
+
+
+;; Function: heapPop
+;; Description: Removes and returns the first item from the heap.
+;;              It pops the last item, places it at the 0th index,
+;;              and then applies the `minHeap` operation to restore the heap property.
+;; Parameters:
+;;   - $list: The list representing the heap.
+;; Returns:
+;;   - The first item removed from the heap and the modified list after the heap property is restored.
+(= (heapPop $list)
+    (let*
+        (
+            (($head $rest) (decons-atom $list))
+            ($lastIndex (- (size-atom $rest) 1))
+            (($splitList $lastItem) (splitAt $lastIndex $rest))
+            ($newList (cons-atom (superpose $lastItem) $splitList)) ; superpose to change expression to symbol, (41) -> 41
+        )
+        (let*
+            (
+                ($heap (minHeap $newList 0))
+            )
+            ($head $heap)
+        )
+    )
+)
