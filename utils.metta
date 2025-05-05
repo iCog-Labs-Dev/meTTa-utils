@@ -1,5 +1,4 @@
 ;; Helper functions that are going to be useful for writing any metta code
-
 (: ~= (-> Atom Atom Bool))
 (= (~= $a $b) (not (== $a $b)))
 
@@ -9,20 +8,9 @@
 
 ;Function to cocatinate two tuples (A B) (C D) ==> (A B C D)
 ;(: cocatTuple (-> Expression Expression Expression))
- (= (concatTuple' $x $y) (collapse (union (superpose $x) (superpose $y))))
- (= (concatTuple $x $y)
-    (if (== $x ())
-        $y
-        (let* ( 
-            (($head $tail) (decons $x))
-            ($tail' (concatTuple $tail $y))
-
-        )
-            (cons-atom $head $tail')
-
-        )
-    )
- )
+(= (concatTuple $x $y)
+    (union-atom $x $y)
+)
 
 (: ++ (-> Expression Expression Expression))
 (= (++ $x $y)
@@ -51,11 +39,30 @@
 
 ; a helper function to the isConsistentExp function.
 ; a function which checks if an element is member of a tuple.
+(: isZero (-> Number Bool))
+(= (isZero $x) (== $x 0))
+
+;; It will return True if greater than 10.
+(: greaterThanTen (-> Number Bool))
+(= (greaterThanTen $x) (> $x 10))
+
+;; It will decrement the input by 1.
+(: decrement (-> Number Number))
+(= (decrement $x) (- $x 1))
+
+;; It will increment the input by 1.
+(: increment (-> Number Number))
+(= (increment $x) (+ $x 1))
+
+;; A function that turns every atom to unit
+(: transformToUnit (-> Atom Atom))
+(= (transformToUnit $x) ())
+
 (: isMember (-> $a $aa Bool))
+
 (= (isMember $x $list)
     (not (== (collapse (intersection (superpose ($x)) (superpose $list))) ()))
 )
-
 ; This function assumes it receives a set1 and set2 expression as parameters.
 ; It then removes similar elements found in set2 that already exist in set1.
 ; The function uses isMember from general helpers functions.
@@ -87,23 +94,24 @@
 ;;    with a new one from a list of atoms.
 ;; INFO: This function needs to change so that it can preserve the
 ;;        operator's position when MeTTa version is upgraded.
-(= (findAndReplace $old $new $list)
-    ;; (let*
-    ;;   (
-    ;;     (() (println! ""))
-    ;;     (() (println! (==> === Inside findAndReplace === <==)))
-    ;;     (() (println! (Parameters ==> Old: $old New: $new List: $list)))
-    ;;     (() (println! (Result ==> (collapse (replace $old $new (superpose $list))))))
-    ;;     (() (println! ""))
-    ;;   )
-      (collapse (replace $old $new (superpose $list)))
-    ;; )
-)
+(= (findAndReplace $old $new $list) 
+  (if (== $list ())
+   $list 
+   (let* ( 
+    ($head (car-atom $list)) 
+    ($tail (cdr-atom $list)) 
+    ($rest (findAndReplace $old $new $tail))
+        ) 
+  (if (== $head $old) 
+    (union-atom ($new) $rest)
+    (union-atom ($head) $rest) 
 
+  ) 
+)))
 ;; A function that behaves like a do while loop.
 ;; It executes the functions in the given list and returns the last result.
-(: until (-> (-> $a Bool) (-> $a $a) $a $a))
-(= (until $predicate $function $x) (if ($predicate $x) $x (let $x' ($function $x) (until $predicate $function $x'))))
+;(: until (-> (-> $a Bool) (-> $a $a) $a $a))
+(= (until $predicate $function $x) (if ($predicate $x) $x (let $y ($function $x) (until $predicate $function $y))))
 
 ;; A foldleft function like the implementation in Haskell.
 ;; It takes a binary function that expects two atoms and
@@ -189,11 +197,22 @@
 (: isSymbol (-> Expression Bool))
 (= (isSymbol $expr) (== (get-metatype $expr) Symbol))
 
+
 (: isUnit (-> Atom Bool))
 (= (isUnit $expr) (== $expr ()))
 
 (: isSingleAtom (-> Atom Bool))
-(= (isSingleAtom $expr) (if (and (== (get-metatype $expr) Expression) (not (isUnit $expr))) (== (cdr-atom $expr) ()) False))
+(= (isSingleAtom $expr)
+    (if (== (isUnit $expr) ()) False
+        (if (== (get-metatype $expr) Expression)
+            (if (== (size-atom $expr) 1) True False)
+            False
+        )
+    )
+
+
+)
+
 
 ;; Function to replace a given atom from a space.
 (: update-atom (-> Grounded Atom Atom (->)))
