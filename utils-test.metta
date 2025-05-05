@@ -1,4 +1,4 @@
-!(register-module! ../meTTa-utils-changed)
+!(register-module! ../meTTa-utils)
 !(import! &self meTTa-utils:utils)
 
 
