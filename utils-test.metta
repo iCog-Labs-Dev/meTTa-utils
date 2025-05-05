@@ -1,5 +1,5 @@
 !(register-module! ../meTTa-utils-changed)
-!(import! &self meTTa-utils-changed:utils)
+!(import! &self meTTa-utils:utils)
 
 
 !(assertEqualToResult (~= 1 2) (True))
