@@ -14,7 +14,6 @@
 !(assertEqualToResult (concatTuple (1 2) (3 4)) ((1 2 3 4)))
 !(assertEqualToResult (concatTuple (1 2) ()) ((1 2)))
 !(assertEqualToResult (concatTuple () ()) (()))
-
 ;; Tests for the function 'Not'
 !(assertEqualToResult (Not (Not (Not A))) ((NOT A)))
 !(assertEqualToResult (Not (Not A)) (A))
@@ -44,24 +43,6 @@
 ;; These are functions used for testing helper functions.
 
 ;; It returns True only if the input is zero.
-(: isZero (-> Number Bool))
-(= (isZero $x) (== $x 0))
-
-;; It will return True if greater than 10.
-(: greaterThanTen (-> Number Bool))
-(= (greaterThanTen $x) (> $x 10))
-
-;; It will decrement the input by 1.
-(: decrement (-> Number Number))
-(= (decrement $x) (- $x 1))
-
-;; It will increment the input by 1.
-(: increment (-> Number Number))
-(= (increment $x) (+ $x 1))
-
-;; A function that turns every atom to unit
-(: transformToUnit (-> Atom Atom))
-(= (transformToUnit $x) ())
 
 ;; Test for dummy function of until
 !(assertEqual (isZero 1) False)
@@ -187,6 +168,6 @@
 !(assertEqual (heapPush (2 3 5 7 9 11 14) 1) (1 2 5 3 9 11 14 7))
 !(assertEqual (heapPush (2 3 5 7 9 11 14) 5) (2 3 5 5 9 11 14 7))
 
-Test heapPop function
+;Test heapPop function
 !(assertEqual (heapPop (2 3 5 7 9 11 14)) (2 (3 7 5 14 9 11)))
 !(assertEqual (heapPop (3 10 7 15 12 8 5)) (3 (5 10 7 15 12 8)))
