@@ -61,7 +61,7 @@
 (: isMember (-> $a $aa Bool))
 
 (= (isMember $x $list)
-    (not (== (collapse (intersection (superpose ($x)) (superpose $list))) ()))
+    (let $netVal (intersection-atom ($x) $list) (not (== $netVal ())))
 )
 ; This function assumes it receives a set1 and set2 expression as parameters.
 ; It then removes similar elements found in set2 that already exist in set1.
@@ -156,7 +156,7 @@
 (= (wrapper $predicate $x) (if (let $bool ($predicate $x) $bool) $x (empty)))
 
 ;; Filter function given a predicate
-(: filter (-> (-> $a Bool) $a $a))
+(: filter (-> (-> $a Bool) $aa $a))
 (= (filter $predicate $list)
    (wrapper $predicate (superpose $list)))
 
@@ -652,7 +652,7 @@
 (= (heapPush $list $item)
     (let*
         (
-            ($appendedList (appendAtom $item $list))
+            ($appendedList (union-atom ($item) $list))
             ($lastIndex (- (size-atom $appendedList) 1))
             (($pushedList $index) (until isNodeLargerThanParent swapWithParent ($appendedList $lastIndex)))
         )
