@@ -652,7 +652,7 @@
 (= (heapPush $list $item)
     (let*
         (
-            ($appendedList (union-atom ($item) $list))
+            ($appendedList (union-atom $list ($item)))
             ($lastIndex (- (size-atom $appendedList) 1))
             (($pushedList $index) (until isNodeLargerThanParent swapWithParent ($appendedList $lastIndex)))
         )
