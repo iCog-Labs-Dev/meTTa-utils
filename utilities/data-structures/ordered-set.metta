@@ -7,8 +7,7 @@
 ;; Takes a comparison comparator 
 ;;      -- comparator returns the result of the comparison in terms of symbol atoms as decribed below
 ;;      G -- strictly greater than, E -- equal to, L -- strictly lower than
-;; TODO: comparison operators used in the original MOSES implementation works by finding the difference between the scores and 
-;;      two exemplars are deemed equal if this difference value is within a certain range which is a samll number  
+
 (: OS.insert (-> (-> $a $a Atom) $a (OS $a) (OS $a)))
 (= (OS.insert $comparator $x NilOS) (ConsOS $x NilOS))
 (= (OS.insert $comparator $new (ConsOS $x $xs))
