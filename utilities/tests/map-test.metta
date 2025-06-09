@@ -1,7 +1,6 @@
 !(register-module! ../../../meTTa-utils)
 
 ! (import! &self meTTa-utils:utilities:data-structures:map)
-; ! (import! &self metta-moses:representation:knob-representation)
 
 ;; Testcase Map.insert
 ! (assertEqual (Map.insert (4 d) (ConsMap (1 a) (ConsMap (2 b) (ConsMap (3 c) NilMap)))) (ConsMap (1 a) (ConsMap (2 b) (ConsMap (3 c) (ConsMap (4 d) NilMap)))))
@@ -55,7 +54,18 @@
 ! (assertEqual (Map.length (ConsMap (1 a) (ConsMap (2 b) (ConsMap (3 c) NilMap)))) 3)
 ! (assertEqual (Map.length (ConsMap (1 a) (ConsMap (2 b) (ConsMap (3 c) (ConsMap (4 d)(ConsMap (5 e) (ConsMap (6 f) (ConsMap (7 g) (ConsMap (8 h) (ConsMap (9 i) NilMap)))))))))) 9)
 
-;; Testcase for Map.insert which uses custom comparison functions
-; ! (assertEqual (Map.insert ((mkNodeId (2 2)) 0) (ConsMap ((mkNodeId (2 1))  1) (ConsMap ((mkNodeId (2 3))  2) NilMap)) == nodeId<)
-;                (ConsMap ((mkNodeId (2 1)) 1) (ConsMap ((mkNodeId (2 2)) 0) (ConsMap ((mkNodeId (2 3)) 2) NilMap))))
-; ! (assertEqual (Map.insert ((mkNodeId (2 2)) 0) NilMap == nodeId<) (ConsMap ((mkNodeId (2 2)) 0) NilMap))
+
+;; a test where a given element of the map needs to be compared with a custom comparator function without mknods
+
+; Helper: Check if a list is sorted with a comparator
+(= (isSortedBy $cmp Nil) True)
+(= (isSortedBy $cmp (Cons $x Nil)) True)
+(= (isSortedBy $cmp (Cons $a (Cons $b $tail)))
+   (and ($cmp $a $b) (isSortedBy $cmp (Cons $b $tail))))
+
+; Main validation: Map keys respect custom comparator
+; Helper: Check if a list is sorted with a comparator
+(= (isSortedBy $cmp Nil) True)
+(= (isSortedBy $cmp (Cons $x Nil)) True)
+(= (isSortedBy $cmp (Cons $a (Cons $b $tail)))
+   (and ($cmp $a $b) (isSortedBy $cmp (Cons $b $tail))))
