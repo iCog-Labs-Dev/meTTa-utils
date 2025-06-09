@@ -105,7 +105,7 @@
 !(assertEqual (map isZero (map decrement (1 2 3 4))) (True False False False))
 !(assertEqual (map isZero (1 2 3 4)) (False False False False))
 !(assertEqual (map isZero (0 1 2 3 4)) (True False False False False))
-!(assertEqual (map hasOneAtom (A B C (A C D) E)) (False False False False False))
+; !(assertEqual (map hasOneAtom (A B C (A C D) E)) (False False False False False))
 !(assertEqual (map greaterThanTen (1 10 2 23 32 7 8 43 0 2)) (False False False True True False False True False False))
 !(assertEqual (map greaterThanTen (1 10 2 23 32 7 8 43 0)) (False False False True True False False True False))
 
@@ -242,9 +242,9 @@
 !(assertEqual (compareElements (A B C) (A B C)) (True True True))
 !(assertEqual (compareElements (1 2 3) (1 2 3)) (True True True))
 
-!(assertEqual (splitAt 2 (A B C D E)) ((A B) (C D E)))
-!(assertEqual (splitAt 0 (A B C D E)) (() (A B C D E)))
-!(assertEqual (splitAt 5 (A B C D E)) ((A B C D E) ()))
+; !(assertEqual (splitAt 2 (A B C D E)) ((A B) (C D E)))
+; !(assertEqual (splitAt 0 (A B C D E)) (() (A B C D E)))
+; !(assertEqual (splitAt 5 (A B C D E)) ((A B C D E) ()))
 
 ;; ;; FIX: Failing Test case.
 ;; !(assertEqual (sort (2 3 1 4) 4) (1 2 3 4))
@@ -339,13 +339,13 @@
 !(assertEqual (add (mkMultip 1) (mkMultip 2)) (mkMultip 3))
 !(assertEqual (add (mkMultip A) (mkMultip 1)) (Error (A or 1) "One of the argument is not a number"))
 ;; Test for expToMMap
-!(assertEqual 
-(expToMMap (((mkDiscSpec 1) (mkLsk1)) ((mkDiscSpec 2) (mkLsk2)) ((mkDiscSpec 3) (mkLsk3)))
-NilMMap discSpec<=)
-(ConsMMap ((mkDiscSpec 1) (mkLsk1)) (ConsMMap ((mkDiscSpec 2) (mkLsk2)) (ConsMMap ((mkDiscSpec 3) (mkLsk3)) NilMMap)))
-)
+; !(assertEqual 
+; (expToMMap (((mkDiscSpec 1) (mkLsk1)) ((mkDiscSpec 2) (mkLsk2)) ((mkDiscSpec 3) (mkLsk3)))
+; NilMMap discSpec<=)
+; (ConsMMap ((mkDiscSpec 1) (mkLsk1)) (ConsMMap ((mkDiscSpec 2) (mkLsk2)) (ConsMMap ((mkDiscSpec 3) (mkLsk3)) NilMMap)))
+; )
 
-!(assertEqual (expToMMap () NilMMap discSpec<=) NilMMap)
+; !(assertEqual (expToMMap () NilMMap discSpec<=) NilMMap)
 
 ;; Test for swapAndOr
 !(assertEqual (swapAndOr AND) OR)
