@@ -1,9 +1,19 @@
 !(register-module! ../../../meTTa-utils)
 
 ! (import! &self meTTa-utils:utilities:data-structures:list-methods)
-! (import! &self meTTa-utils:utilities:general-helpers)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;; Functions from general-helper.metta ;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(: isEven (-> Number Bool))
+(= (isEven $x) (== (% $x 2) 0))
 
+(: isOdd (-> Number Bool))
+(= (isOdd $x) (not (isEven $x)))
 
+(: >>= (-> $a $a Bool))
+(= (>>= ($ctor $x) ($ctor $y))(>= $x $y))
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Test cases for List.foldr
 !(assertEqual (List.foldr + 0 (Cons 1 (Cons 2 (Cons 3 (Cons 4 Nil))))) 10)
 !(assertEqual (List.foldr * 1 (Cons 1 (Cons 2 (Cons 3 (Cons 4 Nil))))) 24)

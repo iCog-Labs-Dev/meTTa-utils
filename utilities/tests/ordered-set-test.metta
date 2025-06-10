@@ -1,7 +1,18 @@
 !(register-module! ../../../meTTa-utils)
 
 ! (import! &self meTTa-utils:utilities:data-structures:ordered-set)
-! (import! &self meTTa-utils:utilities:general-helpers)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;; From general-helper.metta ;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(: compareNum (-> Number Number Atom))
+(= (compareNum $num1 $num2)
+    (case ((> $num1 $num2) (== $num1 $num2))
+        (((True $t) G)
+         ((False True) E)
+         ((False False) L))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Length of an ordered set
 ! (assertEqual (OS.length NilOS) 0)

@@ -69,3 +69,28 @@
 (= (isSortedBy $cmp (Cons $x Nil)) True)
 (= (isSortedBy $cmp (Cons $a (Cons $b $tail)))
    (and ($cmp $a $b) (isSortedBy $cmp (Cons $b $tail))))
+
+
+! (assertEqual 
+  (let* (
+      ($result (collapse (isSortedBy <= (Map.keys (ConsMap (1 a) (ConsMap (2 b) (ConsMap (3 c) NilMap)))))))
+      (() (println! $result)) 
+      ($uni (unique-atom $result))) 
+      $uni) 
+  (True))
+
+! (assertEqual 
+  (let* (
+      ($result (collapse (isSortedBy >= (Map.keys (ConsMap (3 c) (ConsMap (2 b) (ConsMap (1 a) NilMap)))))))
+      (() (println! $result)) 
+      ($uni (unique-atom $result))) 
+      $uni) 
+  (True))
+
+! (assertEqual 
+  (let* (
+      ($result (collapse (isSortedBy <= (Map.keys (ConsMap (1 a) (ConsMap (2 b) (ConsMap (3 c) (ConsMap (4 d) (ConsMap (5 e) NilMap)))))))))
+      (() (println! $result)) 
+      ($uni (unique-atom $result))) 
+      $uni) 
+  (True))
