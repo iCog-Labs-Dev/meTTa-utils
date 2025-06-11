@@ -334,21 +334,22 @@
    (collapse (let $content (get-atoms $space) (remove-atom $space $content))))
 
 ;; Function that merges two sorted lists while keeping them sorted.
-(= (merge $xs $ys) (merge $xs $ys <=))
-(= (merge $xs $ys $key)
-    (case ($xs $ys)
-          (
-            ((() $ys) $ys)
-            (($xs ()) $xs)
-            (($xs $ys)
-              (let*
-                  (
-                    (($x $xss) (decons $xs))
-                    (($y $yss) (decons $ys))
-                  )
-                  (if ($key $x $y)
-                      (let $t (merge $xss $ys $key) (cons-atom $x $t))
-                      (let $t (merge $xs $yss $key) (cons-atom $y $t))))))))
+(= (merge-sort () $right $cmp) $right)
+(= (merge-sort $left () $cmp) $left)
+
+(= (merge-sort $left $right $cmp)
+     (let* (
+            (($lh $lt) (decons-atom $left))
+            (($rh $rt) (decons-atom $right))
+            ($res1 (merge-sort $lt $right $cmp))
+            ($res2 (merge-sort $left $rt $cmp))
+            )
+       (if ($cmp $lh $rh)
+         (cons-atom $lh $res1)
+         (cons-atom $rh $res2)
+         )
+       )
+     )
 
 (: splitAt (-> Number Expression (Atom Atom)))
 (= (splitAt $n $list)
@@ -369,17 +370,21 @@
    )
 )
 
-;; Merge sort function. Takes length to gain 
-;;  performance by avoiding recomputation of index.
-(= (sort $list $len) (sort $list $len <=))
-(= (sort $list $len $key)
-   (if (or (isUnit $list) (isSingleAtom $list))
+;; Merge sort function.
+;; args:
+;;   $list: list to be sorted
+;;   $key: determines the order of the list. 
+;;      Pass dec to sort in decreasing order
+;;      Pass () otherwise.
+(= (sort $list $key)
+   (if (<= (len $list) 1)
        $list
        (let* (
-                ($halfL ((py-atom math.floor) (/ $len 2)))
-                (($left $right) (splitAt $halfL $list))
+               ($mid (floor-math (/ (len $list) 2)))
+               (($left $right) (splitAt $mid $list))
+               ($cmp (if (== dec $key) > <=))
              )
-             (merge (sort $left $halfL $key) (sort $right (- $len $halfL) $key) $key)
+             (merge-sort (sort $left $key) (sort $right $key) $cmp)
        )
    )
 )
