@@ -171,3 +171,7 @@
 ;Test heapPop function
 !(assertEqual (heapPop (2 3 5 7 9 11 14)) (2 (3 7 5 14 9 11)))
 !(assertEqual (heapPop (3 10 7 15 12 8 5)) (3 (5 10 7 15 12 8)))
+
+;Test sort function
+!(assertEqual (sort (1 2 3 0 10) dec) (10 3 2 1 0))
+!(assertEqual (sort (1 2 3 0 10) ()) (0 1 2 3 10))
