@@ -691,3 +691,8 @@
         )
     )
 )
+
+(: getInput (-> String))
+(= (getInput) (
+    let $x ((py-atom sys.stdin.readline)) $x
+))
