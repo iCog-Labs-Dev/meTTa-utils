@@ -175,3 +175,13 @@
 ;Test sort function
 !(assertEqual (sort (1 2 3 0 10) dec) (10 3 2 1 0))
 !(assertEqual (sort (1 2 3 0 10) ()) (0 1 2 3 10))
+
+; Test left shift function
+!(assertEqual (<< 2 4) 32)
+!(assertEqual (<< 8 9) 4096)
+!(assertEqual (<< -10 4) -160)
+
+; Test right shift function
+!(assertEqual (>> 64 4) 4)
+!(assertEqual (>> -32 5) -1)
+!(assertEqual (>> 255 2) 63)
